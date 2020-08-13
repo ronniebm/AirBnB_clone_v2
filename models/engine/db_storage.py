@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-"""DBStorage class for AirBnB"""
+"""DBStorage class for AirBnB."""
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session, scoped_session, relationship
+from sqlalchemy.orm import sessionmaker, scoped_session, relationship
 from os import getenv
 from models.base_model import BaseModel, Base
 from models.user import User
@@ -13,12 +13,13 @@ from models.review import Review
 
 
 class DBStorage():
-    """DBStorage"""
+    """DBStorage."""
+
     __engine = None
     __session = None
 
     def __init__(self):
-        """Init method"""
+        """Init method."""
         mysql_user = getenv('HBNB_MYSQL_USER')
         mysql_pwd = getenv('HBNB_MYSQL_PWD')
         mysql_host = getenv('HBNB_MYSQL_HOST')
@@ -33,7 +34,7 @@ class DBStorage():
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """all method - retrieves an object representation.
+        """All method - retrieves an object representation.
 
         Args:
             cls [object]: Instance of a class.
@@ -60,23 +61,21 @@ class DBStorage():
         return new_dict
 
     def new(self, obj):
-        """Add the object to the current
-        database session (self.__session)"""
+        """Add the object to the current. database session (self.__session)."""
         if obj:
             self.__session.add(obj)
 
     def save(self):
-        """Commit all changes of the current
-        database session (self.__session)"""
+        """Commit all changes of the current. database session."""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """Delete from the current database session obj if not None"""
+        """Delete from the current database session obj if not None."""
         if obj:
             self.__session.delete(obj)
 
     def reload(self):
-        """create all tables in the database (feature of SQLAlchemy)"""
+        """Create all tables in the database (feature of SQLAlchemy)."""
         Base.metadata.create_all(self.__engine)
 
         self.__session = sessionmaker(bind=self.__engine,
