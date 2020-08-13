@@ -25,10 +25,10 @@ class TestDBStorage(unittest.TestCase):
     def setUp(self):
         """Set up method for MySQLdb."""
         self.db = MySQLdb.connect(
-                host=getenv("HBNB_MYSQL_HOST"),
-                user=getenv("HBNB_MYSQL_USER"),
-                passwd=getenv("HBNB_MYSQL_PWD"),
-                db=getenv("HBNB_MYSQL_DB")
+                host="localhost",
+                user="hbnb_dev",
+                passwd="hbnb_dev_pwd",
+                db="hbnb_dev_db"
             )
 
         self.cur = self.db.cursor()

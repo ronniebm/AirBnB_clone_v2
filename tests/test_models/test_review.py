@@ -1,37 +1,16 @@
 #!/usr/bin/python3
-""" """
+"""Module for test Review class"""
+import unittest
+import json
 import pep8
-from tests.test_models.test_base_model import test_basemodel
+import datetime
+
 from models.review import Review
 from models.base_model import BaseModel
 
 
-class test_review(test_basemodel):
-    """ """
-
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "Review"
-        self.value = Review
-
-    def test_place_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.place_id), str)
-
-    def test_user_id(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.user_id), str)
-
-    def test_text(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.text), str)
-
-    """added test cases"""
-
+class TestReview(unittest.TestCase):
+    """Test Review class implementation"""
     def test_doc_module(self):
         """Module documentation"""
         doc = Review.__doc__
@@ -55,16 +34,6 @@ class test_review(test_basemodel):
         """Constructor documentation"""
         doc = Review.__init__.__doc__
         self.assertGreater(len(doc), 1)
-
-    def test_class(self):
-        """Validate the types of the attributes an class"""
-        with self.subTest(msg='Inheritance'):
-            self.assertTrue(issubclass(Review, BaseModel))
-
-        with self.subTest(msg='Attributes'):
-            self.assertIsInstance(Review.place_id, str)
-            self.assertIsInstance(Review.user_id, str)
-            self.assertIsInstance(Review.text, str)
 
 
 if __name__ == '__main__':
