@@ -23,14 +23,13 @@ class TestDBStorage(unittest.TestCase):
         cls.storage.reload()
 
     def setUp(self):
-        """Set up method for MySQLdb."""
+        """Set up method"""
         self.db = MySQLdb.connect(
                 host=getenv("HBNB_MYSQL_HOST"),
                 user=getenv("HBNB_MYSQL_USER"),
                 passwd=getenv("HBNB_MYSQL_PWD"),
                 db=getenv("HBNB_MYSQL_DB")
             )
-
         self.cur = self.db.cursor()
 
     def tearDown(self):

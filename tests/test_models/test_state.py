@@ -1,27 +1,16 @@
 #!/usr/bin/python3
-""" """
+"""Module for test State class"""
+import unittest
+import json
 import pep8
-from tests.test_models.test_base_model import test_basemodel
+import datetime
+
 from models.state import State
 from models.base_model import BaseModel
 
 
-class test_state(test_basemodel):
-    """ """
-
-    def __init__(self, *args, **kwargs):
-        """ """
-        super().__init__(*args, **kwargs)
-        self.name = "State"
-        self.value = State
-
-    def test_name3(self):
-        """ """
-        new = self.value()
-        self.assertEqual(type(new.name), str)
-
-    """added test cases"""
-
+class TestState(unittest.TestCase):
+    """Test State class implementation"""
     def test_doc_module(self):
         """Module documentation"""
         doc = State.__doc__
@@ -45,14 +34,6 @@ class test_state(test_basemodel):
         """Constructor documentation"""
         doc = State.__init__.__doc__
         self.assertGreater(len(doc), 1)
-
-    def test_class(self):
-        """Validate the types of the attributes an class"""
-        with self.subTest(msg='Inheritance'):
-            self.assertTrue(issubclass(State, BaseModel))
-
-        with self.subTest(msg='Attributes'):
-            self.assertIsInstance(State.name, str)
 
 
 if __name__ == '__main__':
