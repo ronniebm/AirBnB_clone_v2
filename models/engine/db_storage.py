@@ -43,12 +43,10 @@ class DBStorage():
             new_dict [dict]: Dictionary with all object representations.
         """
         if cls is not None:
-            print("********************************")
             objs = self.__session.query(cls).all()
 
         else:
-            print("#########################################")
-            classes = ['State', 'City', 'User', 'Place', 'Review']
+            classes = ['State', 'City', 'User', 'Place', 'Review', 'amenity']
             objs = []
             for _class in classes:
                 objs += self.__session.query(eval(_class)).all()
