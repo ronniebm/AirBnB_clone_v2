@@ -35,15 +35,6 @@ class TestCity(unittest.TestCase):
         doc = City.__init__.__doc__
         self.assertGreater(len(doc), 1)
 
-    def test_class(self):
-        """Validate the types of the attributes an class"""
-        with self.subTest(msg='Inheritance'):
-            self.assertTrue(issubclass(City, BaseModel))
-
-        with self.subTest(msg='Attributes'):
-            self.assertIsInstance(City.name, str)
-            self.assertIsInstance(City.state_id, str)
-
 
 if __name__ == '__main__':
     unittest.main()
