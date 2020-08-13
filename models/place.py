@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 """Place Module for HBNB project."""
-from models.base_model import BaseModel
-from sqlalchemy import Column, String, ForeignKey, Integer, Float
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String, ForeignKey, Integer, Float, Table
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """A place to stay."""
 
     __tablename__ = 'places'
@@ -16,6 +16,6 @@ class Place(BaseModel):
     number_bathrooms = Column(Integer, nullable=False, default=0)
     max_guest = Column(Integer, nullable=False, default=0)
     price_by_night = Column(Integer, nullable=False, default=0)
-    latitude = Column(Float(5, 5))
-    longitude = Column(Float(5, 5))
-    amenity_ids = []
+    latitude = Column(Float)
+    longitude = Column(Float)
+    """amenity_ids = []"""
