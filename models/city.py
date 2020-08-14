@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 import models
 
 
-
 class City(BaseModel, Base):
     """The city class, contains state ID and name."""
 
