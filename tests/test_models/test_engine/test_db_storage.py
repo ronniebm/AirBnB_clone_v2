@@ -1,38 +1,67 @@
-#!/usr/bin/python
-"""Unittests for DBStorage class of AirBnb_Clone_v2"""
+#!/usr/bin/python3
+
 import unittest
-import pep8
 from os import getenv
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
+import os.path
+from datetime import datetime
 from models.engine.db_storage import DBStorage
-import MySQLdb
+from models import *
 
 
-class TestDBStorage(unittest.TestCase):
-    """Test for DBSTorage file."""
+@unittest.skipIf(getenv('HBNB_TYPE_STORAGE') != 'db',
+                 'Storage type is not database')
+class test_DBStorage(unittest.TestCase):
+    """
+    Test database storage
+    """
 
-    def setUp(self):
-        """Set up method"""
-        self.db_connection = MySQLdb.connect(host="localhost", port=3306,
-                                             user="hbnb_dev", charset="utf8",
-                                             passwd="hbnb_dev_pwd",
-                                             db='hbnb_dev_db')
+    @classmethod
+    def setUpClass(self):
+        storage._DBStorage__session.close()
+        self.store = DBStorage()
+        self.store.reload()
 
-        self.cursor = self.db_connection.cursor()
+    @classmethod
+    def tearDownClass(self):
+        self.store._DBStorage__session.close()
+        storage.reload()
 
-    def tearDown(self):
-        """Tear down method (db.close)."""
-        self.cursor.close()
-        self.db_connection.close()
+    def test_all(self):
+        self.assertEqual(len(self.store.all()), 0)
+        new_obj = State()
+        new_obj.name = 'California'
+        self.store.new(new_obj)
+        self.assertEqual(len(self.store.all()), 1)
+        # Make all('classname') work without console
 
-    def test_pep8_DBStorage(self):
-        """Test for pep8 style."""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(p.total_errors, 0, "pep8 error")
+    def test_new(self):
+        new_obj = State()
+        new_obj.name = "Texas"
+        new_obj.save()
+        self.assertTrue(len(self.store.all()), 1)
+
+    def test_save(self):
+        self.store.reload()
+        new_obj = State()
+        new_obj.name = 'Washington'
+        self.store.new(new_obj)
+        self.store.save()
+        self.assertEqual(len(self.store.all()), 4)
+
+    def test_delete(self):
+        new_obj = State()
+        new_obj.name = "Michigan"
+        self.store.new(new_obj)
+        self.store.save()
+        self.store.delete(new_obj)
+        self.assertFalse(new_obj in self.store.all())
+
+    def test_reload(self):
+        new_obj = City()
+        self.store.new(new_obj)
+        self.store.reload()
+        test_len = len(self.store.all())
+        self.assertEqual(test_len, 3)
+        self.store.reload()
+        for value in self.store.all().values():
+            self.assertIsInstance(value.created_at, datetime)
