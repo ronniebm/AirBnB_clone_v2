@@ -11,6 +11,7 @@ from fabric.operations import run, put, sudo
 env.hosts = ['35.243.144.124', '3.91.55.208']
 env.user = "ubuntu"
 
+
 def do_deploy(archive_path):
     """do_deploy function."""
     if (os.path.isfile(archive_path) is False):
