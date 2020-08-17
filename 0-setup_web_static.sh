@@ -7,9 +7,8 @@
 
 # 1. install nginx if not exist.
 
-if ! which nginx >/dev/null;
+if ! which nginx > /dev/null;
 then
-    Update & Install Nginx.
     sudo apt-get update
     sudo apt-get -y install nginx
 fi
@@ -34,13 +33,12 @@ echo '<html>
 # ------------------------------
 # 3. re-creating soft links.
 
-rm -f /data/web_static/current
-ln -s /data/web_static/releases/test /data/web_static/current
+ln -sf /data/web_static/releases/test /data/web_static/current
 
 # ------------------------------
 # 4. give ownership of '/data' folder to ubuntu user.
 
-sudo chown -fR ubuntu:ubuntu "/data/"
+sudo chown -fR ubuntu:ubuntu /data/
 
 # ------------------------------
 # 5. Update Nginx config. to serve content of
