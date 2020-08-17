@@ -16,8 +16,8 @@ fi
 # ------------------------------
 # 2. creating folders.
 
-mkdir -p /data/web_static/releases/test;
-mkdir -p /data/web_static/shared;
+sudo mkdir -p /data/web_static/releases/test;
+sudo mkdir -p /data/web_static/shared;
 
 # ------------------------------
 # creating fake html website.
@@ -33,19 +33,19 @@ echo '<html>
 # ------------------------------
 # 3. re-creating soft links.
 
-ln -sf /data/web_static/releases/test /data/web_static/current
+sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
 # ------------------------------
 # 4. give ownership of '/data' folder to ubuntu user.
 
-sudo chown -fR ubuntu:ubuntu /data/
+sudo chown -hR ubuntu:ubuntu /data/
 
 # ------------------------------
 # 5. Update Nginx config. to serve content of
 #    /data/web_static/current/ to hbnb_static.
 
 TEXT="\\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n"
-sed -i "/server_name _;/a $TEXT" /etc/nginx/sites-available/default
+sed -i "/server_name/a $TEXT" /etc/nginx/sites-available/default
 
 # ------------------------------
 # 6. Restart Nginx service.
