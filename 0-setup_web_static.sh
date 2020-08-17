@@ -40,13 +40,13 @@ ln -s /data/web_static/releases/test /data/web_static/current
 # ------------------------------
 # 4. give ownership of '/data' folder to ubuntu user.
 
-sudo chown -R ubuntu:ubuntu "/data"
+sudo chown -fR ubuntu:ubuntu "/data/"
 
 # ------------------------------
 # 5. Update Nginx config. to serve content of
 #    /data/web_static/current/ to hbnb_static.
 
-TEXT="\\\n\tlocation /hbnb_static {\n\t\talias /data/web_static_current/;\n\t}\n"
+TEXT="\\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n"
 sed -i "/server_name localhost;/a $TEXT" /etc/nginx/sites-available/default
 
 # ------------------------------
