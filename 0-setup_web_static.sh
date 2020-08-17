@@ -45,9 +45,9 @@ sudo chown -fR ubuntu:ubuntu /data/
 #    /data/web_static/current/ to hbnb_static.
 
 TEXT="\\\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}\n"
-sed -i "/server_name localhost;/a $TEXT" /etc/nginx/sites-available/default
+sed -i "/server_name _;/a $TEXT" /etc/nginx/sites-available/default
 
 # ------------------------------
 # 6. Restart Nginx service.
 
-sudo service nginx restart
+sudo service nginx start
