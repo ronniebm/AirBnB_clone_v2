@@ -2,9 +2,9 @@
 """
 full deployment
 """
-from fabric.contrib import files
-from datetime import datetime
 import os.path
+import time
+from fabric.contrib import files
 from fabric.api import env, put, run, local
 from fabric.operations import run, put, sudo
 
@@ -16,15 +16,14 @@ env.hosts = ['35.243.144.124', '3.91.55.208']
 def do_pack():
     """packages all contents from web_static into .tgz archive
     """
-    local('mkdir -p versions')
-    date = datetime.now().strftime("%Y%m%d%H%M%S")
-    result = local('tar -czvf versions/web_static_{}.tgz web_static'
-                   .format(date))
-
-    if result.failed:
+    date = time.strftime("%Y%m%d%H%M%S")
+    try:
+        local("mkdir -p versions")
+        local("tar -cvzf versions/web_static_{:s}.tgz web_static/".
+              format(date))
+        return ("versions/web_static_{:s}.tgz".format(date))
+    except:
         return None
-    else:
-        return result
 
 
 def do_deploy(archive_path):
