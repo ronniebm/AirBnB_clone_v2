@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """
-A Fabric script (based on the file 1-pack_web_static.py) that distributes
-an archive to my web servers, using the function do_deploy.
+full deployment
 """
 from datetime import datetime
 import os.path
-from fabric.api import env, put, run
+from fabric.api import env, put, run, local
 from fabric.operations import run, put, sudo
 
 
