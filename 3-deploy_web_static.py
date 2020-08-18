@@ -54,7 +54,7 @@ def deploy():
     """deploy function."""
     try:
         archive_address = do_pack()
-        val = do_deploy(archive_address)
+        val = do_deploy(archive_path)
         return val
     except:
         return False
