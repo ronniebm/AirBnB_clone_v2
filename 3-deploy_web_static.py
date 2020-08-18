@@ -52,9 +52,9 @@ def do_deploy(archive_path):
 
 def deploy():
     """deploy function."""
-    try:
-        archive_address = do_pack()
-        val = do_deploy(archive_path)
-        return val
-    except:
+    path = do_pack()
+
+    if path is None:
         return False
+
+    return do_deploy(path)
