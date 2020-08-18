@@ -2,6 +2,7 @@
 """
 full deployment
 """
+from fabric.contrib import files
 from datetime import datetime
 import os.path
 from fabric.api import env, put, run, local
