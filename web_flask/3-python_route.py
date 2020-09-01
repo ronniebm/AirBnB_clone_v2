@@ -26,8 +26,14 @@ def route2(text):
     return "C " + text.replace('_', ' ')
 
 
+@app.route("/python", strict_slashes=False)
+def route3():
+    """It returns text passed by url"""
+    return "Python is cool"
+
+
 @app.route("/python/<text>", strict_slashes=False)
-def route3(text):
+def route4(text):
     """It returns text passed by url"""
     return "Python " + text.replace('_', ' ')
 
