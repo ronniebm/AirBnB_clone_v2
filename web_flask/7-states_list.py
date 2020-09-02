@@ -2,85 +2,25 @@
 """
 starts a Flask web app.
 """
-import numbers
 from models import storage
 from flask import Flask, render_template
+
 app = Flask(__name__)
 
 
-@app.route("/", strict_slashes=False)
-def hello():
-    """a script that starts a Flask
-    web application"""
-    return "Hello HBNB!"
-
-
-@app.route("/hbnb", strict_slashes=False)
-def route1():
-    """a script that starts a Flask
-    web application"""
-    return "HBNB"
-
-
-@app.route("/c/<text>", strict_slashes=False)
-def route2(text):
-    """It returns text passed by url"""
-    return "C " + text.replace('_', ' ')
-
-
-@app.route("/python", strict_slashes=False)
-def route3():
-    """It returns text passed by url"""
-    return "Python is cool"
-
-
-@app.route("/python/<text>", strict_slashes=False)
-def route4(text):
-    """It returns text passed by url"""
-    return "Python " + text.replace('_', ' ')
-
-
-@app.route("/number/<int:n>", strict_slashes=False)
-def route5(n):
-    """It returns text passed by url"""
-    if isinstance(n, numbers.Number):
-        return "{} is a number".format(n)
-    pass
-
-
-@app.route("/number_template/<int:n>", strict_slashes=False)
-def route6(n):
-    """It returns text passed by url"""
-    if isinstance(n, numbers.Number):
-        return render_template('5-number.html', num=n)
-    pass
-
-
-@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
-def route7(n):
-    """It returns text passed by url"""
-    if isinstance(n, numbers.Number):
-        url = '6-number_odd_or_even.html'
-        if n % 2 == 0:
-            type = "even"
-            return render_template(url, num=n, type=type)
-        type = "odd"
-        return render_template(url, num=n, type=type)
-    pass
+@app.teardown_appcontext
+def teardown(exc=None):
+    """Removes current SQLAlchemy session."""
+    storage.close()
 
 
 @app.route("/states_list", strict_slashes=False)
-def route8():
-    """It returns text passed by url"""
+def route1(n=None):
+    """Display HTML page with a list of
+    all objects inside a DBstorage."""
     url = '7-states_list.html'
     dictionary = storage.all("State")
     return render_template(url, states=dictionary)
-
-
-@app.teardown_appcontext
-def teardown(exc):
-    """Removes current SQLAlchemy session."""
-    storage.close()
 
 
 if __name__ == "__main__":
