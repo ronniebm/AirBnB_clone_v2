@@ -9,13 +9,13 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown(exc=None):
+def teardown(exception):
     """Removes current SQLAlchemy session."""
     storage.close()
 
 
 @app.route("/states_list", strict_slashes=False)
-def route1(n=None):
+def route1():
     """Display HTML page with a list of
     all objects inside a DBstorage."""
     url = '7-states_list.html'

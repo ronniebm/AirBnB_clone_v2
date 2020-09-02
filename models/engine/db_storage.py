@@ -12,6 +12,9 @@ from models.place import Place
 from models.review import Review
 
 
+classes = {"Amenity": Amenity, "City": City,
+           "Place": Place, "Review": Review, "State": State, "User": User}
+
 class DBStorage():
     """DBStorage."""
 
@@ -34,31 +37,18 @@ class DBStorage():
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """All method - retrieves an object representation.
-
-        Args:
-            cls [object]: Instance of a class.
-
-        Return:
-            new_dict [dict]: Dictionary with all object representations.
-        """
-        if cls is not None:
-            objs = self.__session.query(cls).all()
-
-        else:
-            classes = ['State', 'City', 'User', 'Place', 'Review', 'amenity']
-            objs = []
-            for _class in classes:
-                objs += self.__session.query(eval(_class)).all()
-
-        """creating a new dictionary and saving data"""
+        """query on the current database session"""
         new_dict = {}
-
-        for obj in objs:
-            key = '{}.{}'.format(type(obj).__name__, obj.id)
-            new_dict[key] = obj
-
-        return new_dict
+        objs = [v for k, v in classes.items()]
+        if cls:
+            if isinstance(cls, str):
+                cls = classes[cls]
+            objs = [cls]
+        for c in objs:
+            for instance in self.__session.query(c):
+                key = str(instance.__class__.__name__) + "." + str(instance.id)
+                new_dict[key] = instance
+        return (new_dict)
 
     def new(self, obj):
         """Add the object to the current. database session (self.__session)."""
