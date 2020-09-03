@@ -21,8 +21,7 @@ def route1():
     url = "10-hbnb_filters.html"
     states = storage.all("State")
     amenities = storage.all("Amenity")
-    return render_template(url, state=states,
-                        amenities=amenities)
+    return render_template(url, states=states, amenities=amenities)
 
 
 if __name__ == "__main__":
